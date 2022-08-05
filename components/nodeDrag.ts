@@ -19,7 +19,6 @@ const dragEnd = (current: any, e: any, part: 'left' | 'right') => {
   const y = e.y * currentSize / otherSize
 
   if (isInArea) {
-    console.log('ok')
     const clonedNodeContainer =
       d3.select(current)
         .clone(true)  // 复制自身同时复制子节点
