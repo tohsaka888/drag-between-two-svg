@@ -2,7 +2,7 @@
  * @Author: tohsaka888
  * @Date: 2022-08-05 09:07:02
  * @LastEditors: tohsaka888
- * @LastEditTime: 2022-08-05 16:52:33
+ * @LastEditTime: 2022-08-05 17:08:51
  * @Description: 请填写简介
  */
 
@@ -133,7 +133,7 @@ export const nodeDrag = async (part: 'left' | 'right') => {
               .style('background-color', 'transparent')
               // 这里25是半径
               // 计算公式: e.x + offsetX - r
-              .style('transform', `translate3d(${e.x * size + offsetX - 25 - translateX}px, ${e.y * size + offsetY - 25 - translateY}px, 0)`) // 开启GPU加速,优化性能
+              .style('transform', `translate3d(${(e.x + translateX) * size - 25 + offsetX}px,${(e.y + translateY) * size - 25 + offsetY}px, 0)`) // 开启GPU加速,优化性能
               .attr('id', 'move-temp')
 
           moveContainer
