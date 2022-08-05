@@ -2,7 +2,7 @@
  * @Author: tohsaka888
  * @Date: 2022-08-05 09:07:02
  * @LastEditors: tohsaka888
- * @LastEditTime: 2022-08-05 17:08:51
+ * @LastEditTime: 2022-08-05 17:16:56
  * @Description: 请填写简介
  */
 
@@ -29,7 +29,6 @@ const dragEnd = (current: any, e: any, part: 'left' | 'right') => {
   const y = (e.y + fromTranslateY) * currentSize / otherSize - toTranslateY
 
   if (isInArea) {
-    console.log('ok')
     const clonedNodeContainer =
       d3.select(current)
         .clone(true)  // 复制自身同时复制子节点
