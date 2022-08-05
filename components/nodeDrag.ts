@@ -2,7 +2,7 @@
  * @Author: tohsaka888
  * @Date: 2022-08-05 09:07:02
  * @LastEditors: tohsaka888
- * @LastEditTime: 2022-08-05 16:04:36
+ * @LastEditTime: 2022-08-05 16:52:33
  * @Description: 请填写简介
  */
 
@@ -13,12 +13,23 @@ const dragEnd = (current: any, e: any, part: 'left' | 'right') => {
   const currentSize = +d3.select<SVGSVGElement, any>(`#${part}Canvas`).select('#scale').attr('size') || 1
   const currentCanvas = d3.select<SVGSVGElement, any>(`#${part}Canvas`).node()?.getBoundingClientRect()!
   const otherCanvas = d3.select<SVGSVGElement, any>(`#${part === 'left' ? 'right' : 'left'}Canvas`).node()?.getBoundingClientRect()!
+  const fromTranslateX = +d3.select<SVGSVGElement, any>(`#${part}Canvas`).select('#drag').attr('x') || 0
+  const fromTranslateY = +d3.select<SVGSVGElement, any>(`#${part}Canvas`).select('#drag').attr('y') || 0
+  const toTranslateX = +d3.select<SVGSVGElement, any>(`#${part === 'left' ? 'right' : 'left'}Canvas`).select('#drag').attr('x') || 0
+  const toTranslateY = +d3.select<SVGSVGElement, any>(`#${part === 'left' ? 'right' : 'left'}Canvas`).select('#drag').attr('y') || 0
 
-  const isInArea = part === 'left' ? e.x * currentSize > currentCanvas.width : e.x < 0
-  const x = part === 'left' ? (e.x * currentSize - otherCanvas.left) / otherSize : (currentCanvas.left + e.x * currentSize) / otherSize
-  const y = e.y * currentSize / otherSize
+  const isInArea =
+    part === 'left'
+      ? (e.x + fromTranslateX) * currentSize > currentCanvas.width
+      : e.x + fromTranslateX < 0
+  const x =
+    part === 'left'
+      ? ((e.x + fromTranslateX) * currentSize - otherCanvas.left) / otherSize - toTranslateX
+      : (currentCanvas.left + (e.x + fromTranslateX) * currentSize) / otherSize - toTranslateX
+  const y = (e.y + fromTranslateY) * currentSize / otherSize - toTranslateY
 
   if (isInArea) {
+    console.log('ok')
     const clonedNodeContainer =
       d3.select(current)
         .clone(true)  // 复制自身同时复制子节点
@@ -82,6 +93,8 @@ export const nodeDrag = async (part: 'left' | 'right') => {
       d3.drag<any, any>()
         .on('start', function (e) {
           const size = +d3.select<SVGSVGElement, any>(`#${part}Canvas`).select('#scale').attr('size') || 1
+          const translateX = +d3.select<SVGSVGElement, any>(`#${part}Canvas`).select('#drag').attr('x') || 0
+          const translateY = +d3.select<SVGSVGElement, any>(`#${part}Canvas`).select('#drag').attr('y') || 0
           if (part === 'right') {
             offsetX += document.getElementById('leftCanvas')?.getBoundingClientRect().width as number
           }
@@ -120,7 +133,7 @@ export const nodeDrag = async (part: 'left' | 'right') => {
               .style('background-color', 'transparent')
               // 这里25是半径
               // 计算公式: e.x + offsetX - r
-              .style('transform', `translate3d(${e.x * size + offsetX - 25}px, ${e.y * size + offsetY - 25}px, 0)`) // 开启GPU加速,优化性能
+              .style('transform', `translate3d(${e.x * size + offsetX - 25 - translateX}px, ${e.y * size + offsetY - 25 - translateY}px, 0)`) // 开启GPU加速,优化性能
               .attr('id', 'move-temp')
 
           moveContainer
@@ -132,8 +145,10 @@ export const nodeDrag = async (part: 'left' | 'right') => {
         .on('drag', (e) => {
           requestAnimationFrame(() => {
             const size = +d3.select<SVGSVGElement, any>(`#${part}Canvas`).select('#scale').attr('size') || 1
+            const translateX = +d3.select<SVGSVGElement, any>(`#${part}Canvas`).select('#drag').attr('x') || 0
+            const translateY = +d3.select<SVGSVGElement, any>(`#${part}Canvas`).select('#drag').attr('y') || 0
             d3.select('#move-temp')
-              .style('transform', `translate3d(${e.x * size - 25 + offsetX}px,${e.y * size - 25 + offsetY}px, 0)`)
+              .style('transform', `translate3d(${(e.x + translateX) * size - 25 + offsetX}px,${(e.y + translateY) * size - 25 + offsetY}px, 0)`)
           })
         })
         .on('end', function (this, e) {

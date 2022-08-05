@@ -2,7 +2,7 @@
  * @Author: tohsaka888
  * @Date: 2022-08-05 15:03:15
  * @LastEditors: tohsaka888
- * @LastEditTime: 2022-08-05 16:28:22
+ * @LastEditTime: 2022-08-05 16:30:17
  * @Description: 请填写简介
  */
 
@@ -41,6 +41,10 @@ export const canvasDrag = () => {
               "transform",
               `translate(${x + event.dx / size}, ${y + event.dy / size})`
             );
+
+            currentElement
+              .attr('x', x + event.dx / size)
+              .attr('y', y + event.dy / size)
           })
           .on('end', function () {
             d3.select(this).style('cursor', 'auto')
