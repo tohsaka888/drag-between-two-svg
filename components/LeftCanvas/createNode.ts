@@ -2,7 +2,7 @@
  * @Author: tohsaka888
  * @Date: 2022-08-05 08:43:18
  * @LastEditors: tohsaka888
- * @LastEditTime: 2022-08-05 11:08:03
+ * @LastEditTime: 2022-08-05 15:14:20
  * @Description: 请填写简介
  */
 
@@ -14,11 +14,13 @@ export const createNode = () => {
   nodes.forEach((node, index) => {
     const x = Math.random() * 10 * 50
     const y = Math.random() * 10 * 50
-    const nodeContainer = d3.select('#leftCanvas')
-      .append('g')
-      .classed('left-node', true)
-      .attr('x', x)
-      .attr('y', y)
+    const nodeContainer =
+      d3.select('#leftCanvas')
+        .select('#drag')
+        .append('g')
+        .classed('left-node', true)
+        .attr('x', x)
+        .attr('y', y)
 
     nodeContainer
       .append('circle')
