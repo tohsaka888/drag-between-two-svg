@@ -2,7 +2,7 @@
  * @Author: tohsaka888
  * @Date: 2022-08-05 09:07:02
  * @LastEditors: tohsaka888
- * @LastEditTime: 2022-08-05 14:55:30
+ * @LastEditTime: 2022-08-05 14:59:24
  * @Description: 请填写简介
  */
 
@@ -47,6 +47,22 @@ const dragEnd = (current: any, e: any, part: 'left' | 'right') => {
     // 移动后是否删除原节点
     // 根据不同场景决定是否删除
     d3.select(current).remove()
+  } else {
+    const currentNode = d3.select(current)
+    currentNode
+      .select('circle')
+      .attr('cx', e.x)
+      .attr('cy', e.y)
+
+    currentNode
+      .select('.name')
+      .attr('x', e.x)
+      .attr('y', e.y)
+
+    currentNode
+      .select('.label')
+      .attr('x', e.x)
+      .attr('y', e.y + 35)
   }
 }
 
