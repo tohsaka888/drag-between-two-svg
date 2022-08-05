@@ -2,7 +2,7 @@
  * @Author: tohsaka888
  * @Date: 2022-08-05 09:07:02
  * @LastEditors: tohsaka888
- * @LastEditTime: 2022-08-05 14:44:52
+ * @LastEditTime: 2022-08-05 14:53:30
  * @Description: 请填写简介
  */
 
@@ -113,12 +113,17 @@ export const nodeDrag = async (part: 'left' | 'right') => {
         })
         .on('end', function (this, e) {
           dragEnd(this, e, part)
-
           // 删除移动
           d3.select('#move-temp').remove()
 
+          // 移动后是否删除原节点
+          // 根据不同场景决定是否删除
+          d3.select(this).remove()
+
           offsetX = 0
           offsetY = 0
+
+          nodeDrag(part === 'left' ? 'right' : 'left')
         })
     )
 }
