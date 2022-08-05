@@ -2,7 +2,7 @@
  * @Author: tohsaka888
  * @Date: 2022-08-05 08:43:40
  * @LastEditors: tohsaka888
- * @LastEditTime: 2022-08-05 15:13:30
+ * @LastEditTime: 2022-08-05 16:58:06
  * @Description: 请填写简介
  */
 
@@ -10,10 +10,10 @@ import * as d3 from 'd3'
 import { mockFakeData } from 'mock/mockNodeData'
 
 export const createNode = () => {
-  const nodes = mockFakeData(15)
+  const nodes = mockFakeData(30)
   nodes.forEach((node, index) => {
-    const x = Math.random() * 10 * 50
-    const y = Math.random() * 10 * 50
+    const x = Math.random() * 30 * 50
+    const y = Math.random() * 30 * 50
     const nodeContainer =
       d3.select('#rightCanvas')
         .select('#drag')
