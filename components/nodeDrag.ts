@@ -2,12 +2,49 @@
  * @Author: tohsaka888
  * @Date: 2022-08-05 09:07:02
  * @LastEditors: tohsaka888
- * @LastEditTime: 2022-08-05 11:25:18
+ * @LastEditTime: 2022-08-05 14:44:52
  * @Description: 请填写简介
  */
 
 import * as d3 from 'd3'
-import { cloneDeep } from 'lodash'
+
+const dragEnd = (current: any, e: any, part: 'left' | 'right') => {
+  const currentCanvas = d3.select<SVGSVGElement, any>(`#${part}Canvas`).node()?.getBoundingClientRect()!
+  const otherCanvas = d3.select<SVGSVGElement, any>(`#${part === 'left' ? 'right' : 'left'}Canvas`).node()?.getBoundingClientRect()!
+
+  const isInArea = part === 'left' ? e.x > currentCanvas.width : e.x < 0
+  const x = part === 'left' ? e.x - otherCanvas.left : currentCanvas.left + e.x
+
+  if (isInArea) {
+    const clonedNodeContainer =
+      d3.select(current)
+        .clone(true)  // 复制自身同时复制子节点
+        .classed('clonedNodeContainer', true)
+
+    clonedNodeContainer
+      .selectAll('circle')
+      .attr('cx', x)
+      .attr('cy', e.y)
+      .style('cursor', 'pointer')
+
+    clonedNodeContainer
+      .select('.name')
+      .attr('x', x)
+      .attr('y', e.y)
+      .style('cursor', 'pointer')
+
+    clonedNodeContainer
+      .select('.label')
+      .attr('x', x)
+      .attr('y', e.y + 35)
+      .style('cursor', 'pointer')
+
+    const clonedNode = clonedNodeContainer.node() as SVGGElement
+    document.getElementById(`${part === 'left' ? 'right' : 'left'}Canvas`)?.append(clonedNode)
+    d3.select(`#${part}Canvas`).selectAll('.clonedNodeContainer').remove()
+    d3.select(`#${part === 'left' ? 'right' : 'left'}Canvas`).selectAll('.clonedNodeContainer').attr('class', `${part === 'left' ? 'right' : 'left'}-node`)
+  }
+}
 
 export const nodeDrag = async (part: 'left' | 'right') => {
   // Tips:
@@ -74,74 +111,8 @@ export const nodeDrag = async (part: 'left' | 'right') => {
               .style('transform', `translate3d(${e.x - 25 + offsetX}px,${e.y - 25 + offsetY}px, 0)`)
           })
         })
-        .on('end', function (e) {
-          if (part === 'left') {
-            const rightCanvas = document.getElementById('rightCanvas') as HTMLElement
-            const offsetX = rightCanvas.getBoundingClientRect().left
-            if (e.x > rightCanvas.getBoundingClientRect().left && e.x < rightCanvas.getBoundingClientRect().left + rightCanvas.getBoundingClientRect().width) {
-              const clonedNodeContainer =
-                d3.select(this)
-                  .clone(true)  // 复制自身同时复制子节点
-                  .classed('clonedNodeContainer', true)
-
-              clonedNodeContainer
-                .selectAll('circle')
-                .attr('cx', e.x - offsetX)
-                .attr('cy', e.y)
-                .style('cursor', 'pointer')
-
-              clonedNodeContainer
-                .select('.name')
-                .attr('x', e.x - offsetX)
-                .attr('y', e.y)
-                .style('cursor', 'pointer')
-
-              clonedNodeContainer
-                .select('.label')
-                .attr('x', e.x - offsetX)
-                .attr('y', e.y + 35)
-                .style('cursor', 'pointer')
-
-              const clonedNode = clonedNodeContainer.node() as SVGGElement
-              rightCanvas.append(clonedNode)
-              d3.select('#leftCanvas').selectAll('.clonedNodeContainer').remove()
-              d3.select('#rightCanvas').selectAll('.clonedNodeContainer').attr('class', 'right-node')
-            }
-          } else {
-            if (e.x < 0) {
-              console.log('ok')
-              const rightCanvas = document.getElementById('leftCanvas') as HTMLElement
-              const offsetX = rightCanvas.getBoundingClientRect().left
-
-              const clonedNodeContainer =
-                d3.select(this)
-                  .clone(true)  // 复制自身同时复制子节点
-                  .classed('clonedNodeContainer', true)
-
-              clonedNodeContainer
-                .selectAll('circle')
-                .attr('cx', rightCanvas.getBoundingClientRect().width + e.x)
-                .attr('cy', e.y)
-                .style('cursor', 'pointer')
-
-              clonedNodeContainer
-                .select('.name')
-                .attr('x', rightCanvas.getBoundingClientRect().width + e.x)
-                .attr('y', e.y)
-                .style('cursor', 'pointer')
-
-              clonedNodeContainer
-                .select('.label')
-                .attr('x', rightCanvas.getBoundingClientRect().width + e.x)
-                .attr('y', e.y + 35)
-                .style('cursor', 'pointer')
-
-              const clonedNode = clonedNodeContainer.node() as SVGGElement
-              rightCanvas.append(clonedNode)
-              d3.select('#rightCanvas').selectAll('.clonedNodeContainer').remove()
-              d3.select('#leftCanvas').selectAll('.clonedNodeContainer').attr('class', 'left-node')
-            }
-          }
+        .on('end', function (this, e) {
+          dragEnd(this, e, part)
 
           // 删除移动
           d3.select('#move-temp').remove()
