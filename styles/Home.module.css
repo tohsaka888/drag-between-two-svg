@@ -1,17 +1,3 @@
-.container {
-  padding: 0 2rem;
-}
-
-.main {
-  min-height: 100vh;
-  padding: 4rem 0;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
 .footer {
   display: flex;
   flex: 1;
@@ -126,4 +112,10 @@
   .logo img {
     filter: invert(1);
   }
+}
+
+.flex-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
