@@ -2,7 +2,7 @@
  * @Author: tohsaka888
  * @Date: 2022-08-05 09:07:02
  * @LastEditors: tohsaka888
- * @LastEditTime: 2022-08-05 11:20:05
+ * @LastEditTime: 2022-08-05 11:25:18
  * @Description: 请填写简介
  */
 
@@ -105,7 +105,7 @@ export const nodeDrag = async (part: 'left' | 'right') => {
               const clonedNode = clonedNodeContainer.node() as SVGGElement
               rightCanvas.append(clonedNode)
               d3.select('#leftCanvas').selectAll('.clonedNodeContainer').remove()
-              d3.select('#rightCanvas').selectAll('.clonedNodeContainer').attr('class', 'newNode')
+              d3.select('#rightCanvas').selectAll('.clonedNodeContainer').attr('class', 'right-node')
             }
           } else {
             if (e.x < 0) {
@@ -139,9 +139,8 @@ export const nodeDrag = async (part: 'left' | 'right') => {
               const clonedNode = clonedNodeContainer.node() as SVGGElement
               rightCanvas.append(clonedNode)
               d3.select('#rightCanvas').selectAll('.clonedNodeContainer').remove()
-              d3.select('#leftCanvas').selectAll('.clonedNodeContainer').attr('class', 'newNode')
+              d3.select('#leftCanvas').selectAll('.clonedNodeContainer').attr('class', 'left-node')
             }
-
           }
 
           // 删除移动
