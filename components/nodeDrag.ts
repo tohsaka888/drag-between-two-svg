@@ -2,7 +2,7 @@
  * @Author: tohsaka888
  * @Date: 2022-08-05 09:07:02
  * @LastEditors: tohsaka888
- * @LastEditTime: 2022-08-05 14:53:30
+ * @LastEditTime: 2022-08-05 14:55:30
  * @Description: 请填写简介
  */
 
@@ -43,6 +43,10 @@ const dragEnd = (current: any, e: any, part: 'left' | 'right') => {
     document.getElementById(`${part === 'left' ? 'right' : 'left'}Canvas`)?.append(clonedNode)
     d3.select(`#${part}Canvas`).selectAll('.clonedNodeContainer').remove()
     d3.select(`#${part === 'left' ? 'right' : 'left'}Canvas`).selectAll('.clonedNodeContainer').attr('class', `${part === 'left' ? 'right' : 'left'}-node`)
+
+    // 移动后是否删除原节点
+    // 根据不同场景决定是否删除
+    d3.select(current).remove()
   }
 }
 
@@ -115,10 +119,6 @@ export const nodeDrag = async (part: 'left' | 'right') => {
           dragEnd(this, e, part)
           // 删除移动
           d3.select('#move-temp').remove()
-
-          // 移动后是否删除原节点
-          // 根据不同场景决定是否删除
-          d3.select(this).remove()
 
           offsetX = 0
           offsetY = 0
