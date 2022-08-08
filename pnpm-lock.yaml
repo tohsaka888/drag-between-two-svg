@@ -4,7 +4,7 @@ specifiers:
   '@types/d3': 7.4.0
   '@types/lodash': 4.14.182
   '@types/node': 18.6.4
-  '@types/react': 18.0.16
+  '@types/react': 18.0.17
   '@types/react-dom': 18.0.6
   d3: 7.6.1
   eslint: 8.21.0
@@ -26,7 +26,7 @@ devDependencies:
   '@types/d3': 7.4.0
   '@types/lodash': 4.14.182
   '@types/node': 18.6.4
-  '@types/react': 18.0.16
+  '@types/react': 18.0.17
   '@types/react-dom': 18.0.6
   eslint: 8.21.0
   eslint-config-next: 12.2.4_qugx7qdu5zevzvxaiqyxfiwquq
@@ -445,11 +445,11 @@ packages:
   /@types/react-dom/18.0.6:
     resolution: {integrity: sha512-/5OFZgfIPSwy+YuIBP/FgJnQnsxhZhjjrnxudMddeblOouIodEQ75X14Rr4wGSG/bknL+Omy9iWlLo1u/9GzAA==}
     dependencies:
-      '@types/react': 18.0.16
+      '@types/react': 18.0.17
     dev: true
 
-  /@types/react/18.0.16:
-    resolution: {integrity: sha512-3vX1dzVucqc2nhXtzyaParTIIRZeNbisRqLE7QdeLomVybEyeiuAouzZXgz71P+2kbJOqj3dy0fzoATg2I06GQ==}
+  /@types/react/18.0.17:
+    resolution: {integrity: sha512-38ETy4tL+rn4uQQi7mB81G7V1g0u2ryquNmsVIOKUAEIDK+3CUjZ6rSRpdvS99dNBnkLFL83qfmtLacGOTIhwQ==}
     dependencies:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.2
