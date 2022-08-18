@@ -2,7 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@types/d3': 7.4.0
-  '@types/lodash': 4.14.182
+  '@types/lodash': 4.14.183
   '@types/node': 18.6.4
   '@types/react': 18.0.17
   '@types/react-dom': 18.0.6
@@ -24,7 +24,7 @@ dependencies:
 
 devDependencies:
   '@types/d3': 7.4.0
-  '@types/lodash': 4.14.182
+  '@types/lodash': 4.14.183
   '@types/node': 18.6.4
   '@types/react': 18.0.17
   '@types/react-dom': 18.0.6
@@ -430,8 +430,8 @@ packages:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
     dev: true
 
-  /@types/lodash/4.14.182:
-    resolution: {integrity: sha512-/THyiqyQAP9AfARo4pF+aCGcyiQ94tX/Is2I7HofNRqoYLgN1PBoOWu2/zTA5zMxzP5EFutMtWtGAFRKUe961Q==}
+  /@types/lodash/4.14.183:
+    resolution: {integrity: sha512-UXavyuxzXKMqJPEpFPri6Ku5F9af6ZJXUneHhvQJxavrEjuHkFp2YnDWHcxJiG7hk8ZkWqjcyNeW1s/smZv5cw==}
     dev: true
 
   /@types/node/18.6.4:
